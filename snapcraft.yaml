@@ -5,6 +5,7 @@ version-script: |
     echo "16-$(cat prime/usr/lib/snapd/info |cut -f2 -d=| cut -f1 -d~ | cut -b1-29)"
 summary: snapd runtime environment
 description: The core runtime environment for snapd
+contact: https://forum.snapcraft.io/
 confinement: strict
 type: os
 grade: stable
