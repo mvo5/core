@@ -21,6 +21,9 @@ all: check
 	# package and put ours in place instead.
 	$(SUDO) rm -f config/hooks/*
 	$(SUDO) cp -a live-build/hooks/* config/hooks/
+	# XXX: fugly
+	$(SUDO) mkdir -p binary/boot/filesystem.dir/tmp/snapd
+	$(SUDO) cp $$SNAPCRAFT_STAGE/tmp/*.deb binary/boot/filesystem.dir/tmp/snapd
 	$(ENV) EXTRA_PPAS='$(EXTRA_PPAS)' lb build
 
 install:

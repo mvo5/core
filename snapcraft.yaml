@@ -20,6 +20,19 @@ parts:
           exit 1
       fi
 
+  snapd:
+    plugin: nil
+    # XXX: how to build from "master" for edge and "release/xxx" for beta ?
+    source: https://github.com/snapcore/snapd.git
+    build: |
+      id
+      sudo apt install fakeroot
+      sudo apt build-dep -y ./
+      ./get-deps.sh
+      DEB_BUILD_OPTIONS=nocheck dpkg-buildpackage
+      mkdir -p $SNAPCRAFT_STAGE/tmp/snapd
+      cp ../*.deb $SNAPCRAFT_STAGE/tmp/snapd
+      
   hooks:
     plugin: dump
     source: hooks
@@ -27,6 +40,7 @@ parts:
       configure: meta/hooks/configure
 
   livebuild:
+    after: [snapd]
     source: .
     plugin: make
     build-packages:
